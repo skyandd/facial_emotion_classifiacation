@@ -1,6 +1,6 @@
 # Real-time classification of facial emotions
 
-##Install virtualenv
+## install virtualenv
 
 `virtualenv --python=python3.6 myenv`
 
@@ -15,6 +15,6 @@
 
 `pip install -r requirements.txt`
 
-##Run service
+## Run service
 
 `python run.py`
