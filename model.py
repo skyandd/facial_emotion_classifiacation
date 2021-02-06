@@ -2,7 +2,7 @@
 import tensorflow as tf
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.models import Model
-from tensorflow.keras.applications import mobilenet_v2, mobilenet, mobilenet_v3, efficientnet
+from tensorflow.keras.applications import mobilenet_v2, mobilenet, efficientnet
 
 
 def get_model_builder(model_name):

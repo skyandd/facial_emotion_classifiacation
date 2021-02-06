@@ -54,26 +54,26 @@ assert cam.isOpened(), 'Камера не запущена'
 
 while True:
     ret, frame = cam.read()
-    rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    faces = face_detector.detectMultiScale(rgb_image, 1.3, 5)
-    if len(faces) == 0:
-        cv2.imshow("facial emotion recognition", frame)
-    else:
-        face_coor = faces[0]
-        x, y, w, h = face_coor
-        face = rgb_image[y - 5:y + 5 + h, x - 5:x + 5 + w]
+    faces = face_detector.detectMultiScale(frame, 1.3, 5)
+    
+    if len(faces) != 0:
+        x, y, w, h = faces[0]
+        face = frame[y - 5:y + 5 + h, x - 5:x + 5 + w]
 
-        scale_face = preprocess_image(face, image_size)
-        emotion = predict_emotion(scale_face)
-        rgb_image_with_boundingbox = deepcopy(frame)
-        rgb_image_with_boundingbox = cv2.rectangle(rgb_image_with_boundingbox, (x, y), (x + h, y + w), (0, 255, 0), 1)
-        rgb_image_with_boundingbox_and_text = deepcopy(rgb_image_with_boundingbox)
-        rgb_image_with_boundingbox_and_text = cv2.putText(rgb_image_with_boundingbox_and_text, emotion, (x, y - 10),
-                                                          cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+        face = preprocess_image(face, image_size)
+        emotion = predict_emotion(face)
+        
+        frame = cv2.rectangle(frame, (x, y), (x + h, y + w), (0, 255, 0), 1)
+        frame = cv2.putText(frame,
+                            emotion,
+                            (x, y - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-        cv2.imshow("facial emotion recognition", rgb_image_with_boundingbox_and_text)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    cv2.imshow("facial emotion recognition", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 # if __name__=='__main__':
