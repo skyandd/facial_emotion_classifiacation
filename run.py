@@ -71,6 +71,7 @@ while True:
                             (x, y - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     cv2.imshow("facial emotion recognition", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
