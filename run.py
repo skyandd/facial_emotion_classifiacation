@@ -54,19 +54,19 @@ assert cam.isOpened(), 'Камера не запущена'
 
 while True:
     ret, frame = cam.read()
-    rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    faces = face_detector.detectMultiScale(rgb_image, 1.3, 5)
+    faces = face_detector.detectMultiScale(frame, 1.3, 5)
     
     if len(faces) != 0:
         x, y, w, h = faces[0]
-        face = rgb_image[y - 5:y + 5 + h, x - 5:x + 5 + w]
+        face = frame[y - 5:y + 5 + h, x - 5:x + 5 + w]
 
         face = preprocess_image(face, image_size)
         emotion = predict_emotion(face)
         
-        frame_with_bbox = cv2.rectangle(frame, (x, y), (x + h, y + w), (0, 255, 0), 1)
-        frame = cv2.putText(frame_with_bbox,
+        frame = cv2.rectangle(frame, (x, y), (x + h, y + w), (0, 255, 0), 1)
+        frame = cv2.putText(frame,
                             emotion,
                             (x, y - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
